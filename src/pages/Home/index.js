@@ -10,6 +10,7 @@ import Logo from "../../components/Logo";
 import Icon from "../../components/Icon";
 import Form from "../../containers/Form";
 import Modal from "../../containers/Modal";
+import ModalEvent from "../../containers/ModalEvent";
 import { useData } from "../../contexts/DataContext";
 
 /*
@@ -17,7 +18,7 @@ import { useData } from "../../contexts/DataContext";
   add section id="nos-services"
       section id="nos-realisations"
       section id="notre-equipe" for test
-  add last event test loader
+  add last event test loader + modal
 */
 
 const Home = () => {
@@ -127,13 +128,18 @@ const Home = () => {
           {last === null || last === undefined ? (
             "Loading"
           ) : (
-            <EventCard
-              imageSrc={last?.cover}
-              title={last?.title}
-              date={new Date(last?.date)}
-              small
-              label="boom"
-            />
+            <Modal Content={<ModalEvent event={last} />}>
+              {({ setIsOpened }) => (
+                <EventCard
+                  onClick={() => setIsOpened(true)}
+                  imageSrc={last?.cover}
+                  title={last?.title}
+                  date={new Date(last?.date)}
+                  small
+                  label="boom"
+                />
+              )}
+            </Modal>
           )}
         </div>
         <div className="col contact">
