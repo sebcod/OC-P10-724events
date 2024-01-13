@@ -1,12 +1,12 @@
 /* istanbul ignore file */
 import "./App.scss";
-import Page from "./pages/Home";
+import Home from "./pages/Home";
 import { DataProvider } from "./contexts/DataContext";
 
 function App() {
   return (
     <DataProvider>
-      <Page />
+      <Home />
     </DataProvider>
   );
 }
