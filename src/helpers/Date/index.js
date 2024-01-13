@@ -1,3 +1,8 @@
+/*
+  Fix get month error
+  [0-11] to {1-12} add +1
+*/
+
 export const MONTHS = {
   1: "janvier",
   2: "février",
@@ -13,4 +18,4 @@ export const MONTHS = {
   12: "décembre",
 };
 
-export const getMonth = (date) => MONTHS[date.getMonth()];
+export const getMonth = (date) => MONTHS[date.getMonth() + 1];
