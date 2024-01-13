@@ -1,6 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { api, DataProvider } from "../../contexts/DataContext";
-import Events from "./index";
+import { DataProvider, api } from "../../contexts/DataContext";
+import EventList from "./index";
+
+/*
+  remove  .only
+*/
 
 const data = {
   events: [
@@ -42,28 +46,30 @@ describe("When Events is created", () => {
     api.loadData = jest.fn().mockReturnValue(data);
     render(
       <DataProvider>
-        <Events />
+        <EventList />
+        {/* <div>avril</div> */}
       </DataProvider>
     );
-    await screen.findByText("avril");
+    await screen.findAllByText("avril"); // change findByText by findAllByText
   });
   describe("and an error occured", () => {
     it("an error message is displayed", async () => {
       api.loadData = jest.fn().mockRejectedValue();
       render(
         <DataProvider>
-          <Events />
+          <EventList />
         </DataProvider>
       );
       expect(await screen.findByText("An error occured")).toBeInTheDocument();
     });
   });
   describe("and we select a category", () => {
-    it.only("an filtered list is displayed", async () => {
+    it("an filtered list is displayed", async () => {
+      // .only
       api.loadData = jest.fn().mockReturnValue(data);
       render(
         <DataProvider>
-          <Events />
+          <EventList />
         </DataProvider>
       );
       await screen.findByText("Forum #productCON");
@@ -92,7 +98,7 @@ describe("When Events is created", () => {
       api.loadData = jest.fn().mockReturnValue(data);
       render(
         <DataProvider>
-          <Events />
+          <EventList />
         </DataProvider>
       );
 

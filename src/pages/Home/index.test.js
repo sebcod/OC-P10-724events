@@ -2,6 +2,10 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { DataProvider, api } from "../../contexts/DataContext/index";
 import Home from "./index";
 
+/*
+  implement  list of events, list a people, footer, event card tests
+*/
+
 const data = {
   events: [
     {
@@ -356,7 +360,6 @@ describe("When Form is created", () => {
 });
 
 // to implement
-
 describe("When a page is created", () => {
   it("a list of events is displayed", async () => {
     api.loadData = jest.fn().mockReturnValue(data);
