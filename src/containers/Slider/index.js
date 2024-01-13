@@ -6,9 +6,8 @@ import "./style.scss";
 /*
   Fix Display order by Date
   Fix empty slide
-  Fix unique "key" prop error console
-  Fix can not read property of undefined
-  Fix check
+  Fix error: unique "key" prop error console
+  Fix error: can not read property of undefined
   Add feature click radio button
 */
 
@@ -19,7 +18,7 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   const byDateDesc = data?.focus.sort(
-    (evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1) //  < change to >
+    (evtA, evtB) => new Date(evtB.date) - new Date(evtA.date) //  < change to -
   );
 
   const nextCard = () => {
@@ -27,25 +26,14 @@ const Slider = () => {
     if (byDateDesc !== undefined) {
       clearTimeout(timerSlider);
       timerSlider = setTimeout(
-        () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), // add -1 for remove empty slide
+        () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), // add -1 for remove empty slide, index + 1
         5000
       );
     }
   };
 
-  const onRadioBtnChange = (e) => {
-    // console.log(e.target.value);
-    setIndex(Number(e.target.value)); // convert string to int
-  };
-
-  // const ConsoleLog = ({ children }) => {
-  //   console.log(children);
-  //   return false;
-  // };
-
   useEffect(() => {
     nextCard();
-    // console.log(index);
   });
 
   return (
@@ -54,7 +42,6 @@ const Slider = () => {
         // Warning: Each child in a list should have a unique "key" prop.
         // Change <> to div key={event.date}
         <div key={event.date}>
-          {/* <ConsoleLog>{index}</ConsoleLog> */}
           <div
             // key={event.title}
             className={`SlideCard SlideCard--${
@@ -75,16 +62,16 @@ const Slider = () => {
               {byDateDesc.map(
                 (
                   eventRadio,
-                  radioIdx // change _ by eventRadio
+                  radioIdx // change _ to eventRadio
                 ) => (
                   <input
                     key={eventRadio.date} // unique key
                     type="radio"
                     name="radio-button"
                     value={radioIdx}
-                    checked={index === radioIdx} // idx to index
-                    onChange={(e) => {
-                      onRadioBtnChange(e);
+                    checked={radioIdx === index} // idx to index
+                    onChange={() => {
+                      setIndex(radioIdx);
                     }}
                   />
                 )
