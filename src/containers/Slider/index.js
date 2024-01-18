@@ -70,8 +70,9 @@ const Slider = () => {
                     name="radio-button"
                     value={radioIdx}
                     checked={radioIdx === index} // idx to index
-                    onChange={() => {
-                      setIndex(radioIdx);
+                    onChange={(e) => {
+                      // setIndex(radioIdx);
+                      e.preventDefault();
                     }}
                   />
                 )
